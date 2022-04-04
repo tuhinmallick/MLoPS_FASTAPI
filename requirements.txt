@@ -1,3 +1,13 @@
 streamlit
-git+https://github.com/giswqs/leafmap
-git+https://github.com/giswqs/geemap
+mlflow
+numpy
+pandas
+matplotlib
+torch
+torchvision
+fastapi[all]
+uvicorn
+streamlit-drawable-canvas
+tqdm
+scikit-learn
+opencv-python-headless
