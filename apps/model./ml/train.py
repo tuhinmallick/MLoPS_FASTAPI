@@ -13,11 +13,7 @@ class Trainer:
 
         self.criterion = torch.nn.CrossEntropyLoss() if criterion is None else criterion
 
-        if device is None:
-            self.device = "cpu"
-        else:
-            self.device = device
-
+        self.device = "cpu" if device is None else device
         self.model = self.model.to(device)
 
     def get_model(self):
@@ -32,7 +28,7 @@ class Trainer:
             results["val_acc"] = []
 
         # Start training
-        for epoch in tqdm(range(num_epochs)):
+        for _ in tqdm(range(num_epochs)):
             train_loss, train_acc = self.train_epoch(
                 dataloader=train_dataloader)
             results["train_loss"].append(train_loss)
@@ -50,7 +46,7 @@ class Trainer:
         self.model.train()
         total_loss = 0.
         total_correct = 0.
-        for i, batch in enumerate(dataloader):
+        for batch in dataloader:
             # Send to device
             X, y = batch
             X = X.to(self.device)
@@ -75,7 +71,7 @@ class Trainer:
         self.model.eval()
         total_loss = 0.
         total_correct = 0.
-        for i, batch in enumerate(dataloader):
+        for batch in dataloader:
             # Send to device
             X, y = batch
             X = X.to(self.device)

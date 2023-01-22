@@ -116,18 +116,15 @@ async def predict_api(data: PredictApiData):
 async def delete_model_api(data: DeleteApiData):
     model_name = data.model_name
     version = data.model_version
-    
+
     if version is None:
         # Delete all versions
         mlflowclient.delete_registered_model(name=model_name)
-        response = {"result": f"Deleted all versions of model {model_name}"}
+        return {"result": f"Deleted all versions of model {model_name}"}
     elif isinstance(version, list):
         for v in version:
             mlflowclient.delete_model_version(name=model_name, version=v)
-        response = {
-            "result": f"Deleted versions {version} of model {model_name}"}
+        return {"result": f"Deleted versions {version} of model {model_name}"}
     else:
         mlflowclient.delete_model_version(name=model_name, version=version)
-        response = {
-            "result": f"Deleted version {version} of model {model_name}"}
-    return response
+        return {"result": f"Deleted version {version} of model {model_name}"}
