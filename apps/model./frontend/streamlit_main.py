@@ -5,7 +5,7 @@ import cv2
 import requests
 import urllib
 import json
-import os 
+import os
 # Configs
 MODEL_INPUT_SIZE = 28
 CANVAS_SIZE = MODEL_INPUT_SIZE * 8
@@ -56,10 +56,7 @@ if page == "Train":
         to_post = {"model_name": model_name,
                    "hyperparams": hyperparams, "epochs": epochs}
         response = requests.post(url=TRAIN_URL, data=json.dumps(to_post))
-        if response.ok:
-            res = response.json()["result"]
-        else:
-            res = "Training task failed"
+        res = response.json()["result"] if response.ok else "Training task failed"
         st.write(res)
 
     # if st.session_state.model_type == "Conv":
@@ -110,7 +107,7 @@ elif page == "Predict":
             if response_predict.ok:
                 res = response_predict.json()
                 st.markdown(f"**Prediction**: {res['result']}")
-                
+
             else:
                 st.write("Some error occured")
         except ConnectionError as e:
